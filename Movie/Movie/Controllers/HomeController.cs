@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Movie.Models;
 using Movie.Services;
+using Movie.ViewModels;
 using System.Diagnostics;
 
 namespace Movie.Controllers
@@ -32,19 +33,29 @@ namespace Movie.Controllers
             }
             return View(cinema);
         }
-        public async Task<IActionResult> Search(string title)
+        public async Task<IActionResult> Search(string title, int page = 1)
         {
-            MovieApiResponse result = null;
+            
+            SearchViewModel searchViewModel=new SearchViewModel();
             try
             {
-                 result = await movieApiService.SearchByTitleAsync(title);
+                MovieApiResponse result = await movieApiService.SearchByTitleAsync(title, page);
+                //ViewBag.TotalPages = Math.Ceiling((double)result.TotalResults/10);
+                //ViewBag.CurrentPage = page;
+                searchViewModel.Title = title;
+                searchViewModel.Movies = result.Cinemas;
+                searchViewModel.Response=result.Response;
+                searchViewModel.Error=result.Error;
+                searchViewModel.CurrentPage= page;
+                searchViewModel.TotalResults=result.TotalResults;
+                searchViewModel.TotalPages= (int)Math.Ceiling((double)result.TotalResults / 10);
             }
             catch (Exception ex)
             {
-                ViewBag.errorMessages = ex.Message;
+                searchViewModel.Error = ex.Message;
             } 
             ViewBag.searchMovie = title;
-            return View(result);
+            return View(searchViewModel);
         }
 
         public IActionResult Privacy()
