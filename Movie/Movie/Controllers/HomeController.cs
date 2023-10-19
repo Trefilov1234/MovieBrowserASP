@@ -9,15 +9,19 @@ namespace Movie.Controllers
     public class HomeController : Controller
     {
         private readonly IMovieApiService movieApiService;
+        private readonly IRecentMovieStorage recentMovieStorage;
 
-        public HomeController(IMovieApiService movieApiService)
+        public HomeController(IMovieApiService movieApiService,IRecentMovieStorage recentMovieStorage)
         {
             this.movieApiService = movieApiService;
+            this.recentMovieStorage = recentMovieStorage;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View();
+
+            var result = recentMovieStorage.GetRecent();
+            return View(result);
         }
 
         public async Task<IActionResult> Movie(string id)
@@ -26,12 +30,29 @@ namespace Movie.Controllers
             try
             {
                 cinema = await movieApiService.SearchByIdAsync(id);
+                recentMovieStorage.Add(cinema);
             }
             catch (Exception ex)
             {
                 ViewBag.errorMessages = ex.Message;
             }
             return View(cinema);
+        }
+        public async Task<IActionResult> MovieModal(string id)
+        {
+            Cinema cinema = null;
+
+            try
+            {
+                cinema = await movieApiService.SearchByIdAsync(id);
+                recentMovieStorage.Add(cinema);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.errorMessages = ex.Message;
+            }
+            return PartialView("_MovieModalPartial", cinema);
         }
         public async Task<IActionResult> Search(string title, int page = 1)
         {

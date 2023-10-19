@@ -1,5 +1,5 @@
 ﻿@model Cinema
-<div class="card" style="width: 18rem;">
+<div class="card">
     @* <img src="@(Model.Poster=="N/A" ? "/images/placeholder.png":Model.Poster)" class="card-img-top" alt="..."> *@
     @* <img src="@Model.Poster" class="card-img-top" alt="..."> *@
     @* <img src="@Model.Poster" onerror="event.target.src='/images/placeholder.png'" class="card-img-top" alt="..."> *@
@@ -10,22 +10,14 @@
     </div>
     <div class="card-body">
         <h5 class="card-title">@Model.Title (@Model.Year)</h5>
-        @if (@Model.Type=="movie")
-        {
-            <p class="card-text">Janre : 🎥</p>
-        }
-        else if (@Model.Type == "game")
-        {
-            <p class="card-text">Janre : 🎮</p>
-        }
-        else if (@Model.Type == "series")
-        {
-            <p class="card-text">Janre : 🎬</p>
-        }
+        <p class="card-text">Janre : @Model.Type</p>
+        
 
         @if (Model.Plot==null)
         {
-            <a asp-controller="Home" asp-action="Movie" asp-route-id="@Model.imdbID" class="btn btn-primary">Detail</a>
+            //<a asp-controller="Home" asp-action="Movie" asp-route-id="@Model.imdbID" class="btn btn-primary">Detail</a>
+            <a my-type="Full" movie="@Model"></a>
+            <a my-type="Modal" movie="@Model" data-open-modal></a>
         }
     </div>
 </div>
