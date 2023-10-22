@@ -49,3 +49,11 @@ body {
     overflow: hidden;
     margin: 3px;
 }
+.foot{
+    margin: 0px;
+    padding: 0px;
+    height: 300px;
+}
+.owl-stage{
+    margin: 20px;
+}

@@ -28,7 +28,7 @@ let isScroll = true;
 
 $(window).scroll(async function () {
 
-    if ($(window).scrollTop() + $(window).height() > $(document).height() - 100 && isScroll) {
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 200 && isScroll) {
         isScroll = false;
 
         console.log(page);
@@ -38,14 +38,12 @@ $(window).scroll(async function () {
             let result = await response.text();
 
 
-            $('.row').append(result);
+            $('.myList').append(result);
         }
 
         //if (page >= totalPages) {
         //    $('#buttonNext').remove();
         //}
-
-
 
         isScroll = true;
     }

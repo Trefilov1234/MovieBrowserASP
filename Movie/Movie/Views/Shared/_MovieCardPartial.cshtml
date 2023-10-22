@@ -4,9 +4,15 @@
     @* <img src="@Model.Poster" class="card-img-top" alt="..."> *@
     @* <img src="@Model.Poster" onerror="event.target.src='/images/placeholder.png'" class="card-img-top" alt="..."> *@
     @* <picture cinema="@Model" onerror="event.target.src='/images/placeholder.png'"></picture> *@
-    <div class="img-container">
+    @* <div class="img-container">
         <div class="img-blur" style="background-image:url(@Model.Poster)"></div>
-        <img src="@Model.Poster" onerror="event.target.src='/images/placeholder.png'" class="card-img-top" alt="...">
+        <img src="@Model.Poster" onerror="event.target.src='/img/placeholder.png'" class="card-img-top" alt="...">
+    </div> *@
+    <div class="cat-item d-flex flex-column border mb-4 img-container">
+        <a href="" class="cat-img position-relative overflow-hidden mb-3">
+            <div class="img-blur" style="background-image:url(@Model.Poster)"></div>
+            <img src="@Model.Poster" onerror="event.target.src='/img/placeholder.png'" class="card-img-top img-fluid" alt="...">
+        </a>
     </div>
     <div class="card-body">
         <h5 class="card-title">@Model.Title (@Model.Year)</h5>
