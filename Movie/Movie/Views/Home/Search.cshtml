@@ -15,17 +15,10 @@
         <p>Search results by title : @Model.Title (@Model.TotalResults)</p>
 
         <div class="row">
-            @foreach (Cinema item in Model.Movies)
-            {
-
-               <div class="col-3">
-                    <partial name="_MovieCardPartial" model="@item"></partial>
-               </div>
-                
-
-            }
+            <partial name="_MovieListPartial" model="@Model.Movies"></partial>
         </div>
-        int begin = Model.CurrentPage;
+        //nav pagination
+       @*  int begin = Model.CurrentPage;
         int end = Model.CurrentPage + 5;
         int totalPages=Model.TotalPages;
         int restriction_pages;
@@ -91,43 +84,20 @@
                     </li>
                 }
             </ul>
-        </nav>
+        </nav> *@
     }
     else
     {
         <p>Not results</p>
     }
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+@* pagination button *@
+@* <button id="buttonNext" class="btn btn-primary">Next</button> *@
+<partial name="_ModalWindowPartial"></partial>
 
 @section Funcs{
     <script>
-
-        $('[data-open-modal]').click(async function () {
-            event.preventDefault();
-            let url = $(this).attr('href');
-            let response = await fetch(url);
-            let result = await response.text();
-            $('.modal-body').html(result);
-            $('#exampleModal').modal('show');
-        });
+        //scroll pagination
+        initPagination(@Model.CurrentPage, @Model.TotalPages, '@Url.ActionLink("SearchResult","Home",new {title = Model.Title})');
     </script>
 }

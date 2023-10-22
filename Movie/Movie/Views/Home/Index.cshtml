@@ -16,18 +16,13 @@
         <h1>Recent movies</h1>
         
             <div class="row">
-                @foreach(Cinema item in Model)
-                {
-                    <div class="col-2">
-                        <partial name="_MovieCardPartial" model="@item"></partial>
-                    </div>
-                }
+            <partial name="_MovieListPartial" model="@Model"></partial>
             </div>
         
     }
 </div>
 
-
+<partial name="_ModalWindowPartial"></partial>
 @* @section Farid{
     
 <script>

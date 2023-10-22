@@ -54,6 +54,23 @@ namespace Movie.Controllers
             }
             return PartialView("_MovieModalPartial", cinema);
         }
+        public async Task<IActionResult> SearchResult(string title, int page = 1, int countViewPage = 4)
+        {
+            SearchViewModel searchViewModel = new SearchViewModel();
+
+
+            try
+            {
+                MovieApiResponse result = await movieApiService.SearchByTitleAsync(title, page);
+                searchViewModel.Movies = result.Cinemas;
+            }
+            catch (Exception ex)
+            {
+                searchViewModel.Error = ex.Message;
+            }
+
+            return PartialView("_MovieListPartial", searchViewModel.Movies);
+        }
         public async Task<IActionResult> Search(string title, int page = 1)
         {
             

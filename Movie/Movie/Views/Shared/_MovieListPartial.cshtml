@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Cinema>
+@foreach (Cinema item in Model)
+{
+    <div class="col-3">
+        <partial name="_MovieCardPartial" model="@item"></partial>
+    </div>
+}
